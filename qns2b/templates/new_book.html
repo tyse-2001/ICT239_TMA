@@ -1,0 +1,26 @@
+{% from "_render_field.html" import render_book_field, render_author_field %}
+{% extends "base.html" %}
+
+{% block mainBodyContent %}
+{{ super() }}
+<div class="card my-2 shadow">
+    <div class="card-body">
+        <form action="{{ url_for('books.new_book') }}" method="post">
+            {{ render_book_field(form.genres, type="genres", id="genres") }}
+            {{ render_book_field(form.title, type="title", id="title") }}
+            {{ render_book_field(form.category, type="category", id="category") }}
+            {{ render_book_field(form.url, type="url", id="url") }}
+            {{ render_book_field(form.description, type="description", id="description") }}
+            {{ render_author_field(form.author_1, form.is_illustrator_1, id="author_1") }}
+            {{ render_author_field(form.author_2, form.is_illustrator_2, id="author_2") }}
+            {{ render_author_field(form.author_3, form.is_illustrator_3, id="author_3") }}
+            {{ render_author_field(form.author_4, form.is_illustrator_4, id="author_4") }}
+            {{ render_author_field(form.author_5, form.is_illustrator_5, id="author_5") }}
+            {{ render_book_field(form.pages, type="pages", id="pages") }}
+            {{ render_book_field(form.copies, type="copies", id="copies") }}
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn btn-success", value="login">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

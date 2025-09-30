@@ -12,3 +12,55 @@
     </ul>
 </div>
 {% endmacro %}
+
+
+{% macro render_book_field(field) %}
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-2">
+            <label for="{{ field.name }} ">
+                <strong>{{ field.label.text.capitalize() }}</strong>
+            </label>
+        </div>
+        <div class="col-10">
+            {{ field(class_='form-control', **kwargs)|safe }}
+        </div>
+    </div>
+    <ul>
+        {% for error in field.errors %}
+        <li style="color:red;">{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endmacro %}
+
+
+{% macro render_author_field(author, illustrator) %}
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-2">
+            <label for="{{ author.name }} ">
+                <strong>{{ author.label.text.capitalize() }}</strong>
+            </label>
+        </div>
+        <div class="col-7">
+            {{ author(class_='form-control', **kwargs)|safe }}
+        </div>
+        <div class="col-1">
+            {{ illustrator(class_='form-control', **kwargs)|safe }}
+        </div>
+        <div class="col-2">
+            <label for="{{ illustrator.name }} ">
+                <p>{{ illustrator.label.text.capitalize() }}</p>
+            </label>
+        </div>
+    </div>
+    <ul>
+        {% for error in author.errors %}
+        <li style="color:red;">{{ error }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endmacro %}

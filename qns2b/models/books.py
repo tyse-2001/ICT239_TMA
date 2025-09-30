@@ -191,6 +191,10 @@ class Book(db.Document):
     copies = db.IntField()
 
     @staticmethod
+    def getBook(title):
+        return Book.objects(title=title).first()
+
+    @staticmethod
     def getAllBooks():
         books = Book.objects()
         if not books:
