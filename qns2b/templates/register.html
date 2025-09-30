@@ -1,0 +1,21 @@
+{% from "_render_field.html" import render_field %}
+{% extends "base.html" %}
+
+{% block mainBodyContent %}
+{{ super() }}
+<div class="card my-2 shadow">
+    <div class="card-header">
+        <h2>{{ panel }}</h2>
+    </div>
+    <div class="row card-body">
+        <form action="{{ url_for('auth.register') }}" method="post">
+            {{ render_field(form.email, type="email", placeholder="Enter email", id="email") }}
+            {{ render_field(form.password, type="password", placeholder="Enter password", id="pwd") }}
+            {{ render_field(form.name, type="name", id="name") }}
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn btn-success", value="login">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
