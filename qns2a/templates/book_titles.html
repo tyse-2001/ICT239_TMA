@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block mainBodyContent %}
+<div class="row titles-bar">
+    <div class="col align-self-center">
+        <p>Number of titles: {{ books | length }}</p>
+    </div>
+    <div class="col d-flex justify-content-end">
+        <form action="{{ url_for('home') }}" method="post" class="nav-item nav-link text-light">
+            <label for="category" class="text-dark">Category</label>
+            <select name="category" id="category">
+                <option value="All" selected>All</option>
+                {% for c in categories %}
+                <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+</div>
+<section>
+    {% for book in books %}
+
+    <div class="card my-2 shadow">
+        <div class="row card-body">
+            <div class="col-lg-4 text-center">
+                <img class="book-cover img-fluid" src="{{ book.url }}" alt="{{ book.title }}">
+            </div>
+            <div class="col-lg-8">
+                <h1>{{ book.title }}</h1>
+                <h1>By {{ book.authors | join(',') }}</h1>
+                <p class="card-text">Category: {{ book.category }}, {{ book.genres | join(', ') }}</p>
+                <p class="card-text">Pages: {{ book.pages }}</p>
+                <p class="card-text">{{ book.description[0] }}</p>
+                <p class="card-text">{{ book.description[-1] }}</p>
+            </div>
+        </div>
+        <div class="row card-body d-flex justify-content-end">
+            <a href="bookTitles/{{ book.title }}" class="btn btn-success">More details</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

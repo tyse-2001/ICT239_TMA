@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block mainBodyContent %}
+<div class="card my-2 shadow">
+    <div class="row card-body">
+        {% if item is none %}
+            <p class="card-text">Book does not exist</p>
+        {% else %}
+            <div class="col-lg-4 text-center">
+                <img class="book-cover img-fluid" src="{{ book.url }}" alt="{{ book.title }}">
+            </div>
+            <div class="col-lg-8">
+                <h1>{{ book.title }}</h1>
+                <h1>By {{ book.authors | join(',') }}</h1>
+                <p class="card-text">Category: {{ book.category }}, {{ book.genres | join(', ') }}</p>
+                <p class="card-text">Pages: {{ book.pages }}</p>
+                <p class="card-text">Copies: {{ book.copies }} Available: {{ book.available }}</p>
+                {% for description in book.description %}
+                    <p class="card-text">{{ description }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="row card-body d-flex justify-content-end">
+        <a href="{{ url_for('home') }}" class="btn btn-success">Back to Book Titles</a>
+    </div>
+</div>
+
+{% endblock %}
