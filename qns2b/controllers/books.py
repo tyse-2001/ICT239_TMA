@@ -102,7 +102,7 @@ def new_book():
                 copies=form.copies.data
             )
             flash(f"{book.title} added")
-            return redirect(url_for("home"))
+            return redirect(url_for("books.new_book"))
         else:
             flash(f"{form.title.data} already exists")
             form.title.errors.append(f"{form.title.data} already exists")
