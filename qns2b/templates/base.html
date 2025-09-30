@@ -23,10 +23,15 @@
                 <div class="container-fluid">
                     <div class="row">
                         <!-- sidebar -->
-                        <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
+                        <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top text-center">
                             <a href="#" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">
                                 SG Library
                             </a>
+                            {% if current_user.is_authenticated  %}
+                            <span class="text-center text-white d-block py-3 mb-4 bottom-border">
+                                {{ current_user.name }}
+                            </span>
+                            {% endif %}
                             <ul class="navbar-nav flex-column mt-4">
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('home') }}">
@@ -34,14 +39,14 @@
                                         <span class="text-white">Book Titles</span>
                                     </a>
                                 </li>
-                                {% if current_user.is_authenticated  %}
+                                {% if current_user.is_authenticated and current_user.name == 'Admin'  %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('books.new_book') }}">
                                         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M176 544C96.5 544 32 479.5 32 400C32 336.6 73 282.8 129.9 263.5C128.6 255.8 128 248 128 240C128 160.5 192.5 96 272 96C327.4 96 375.5 127.3 399.6 173.1C413.8 164.8 430.4 160 448 160C501 160 544 203 544 256C544 271.7 540.2 286.6 533.5 299.7C577.5 320 608 364.4 608 416C608 486.7 550.7 544 480 544L176 544zM337 255C327.6 245.6 312.4 245.6 303.1 255L231.1 327C221.7 336.4 221.7 351.6 231.1 360.9C240.5 370.2 255.7 370.3 265 360.9L296 329.9L296 432C296 445.3 306.7 456 320 456C333.3 456 344 445.3 344 432L344 329.9L375 360.9C384.4 370.3 399.6 370.3 408.9 360.9C418.2 351.5 418.3 336.3 408.9 327L336.9 255z"/></svg>
                                         <span class="text-white">New Book</span>
                                     </a>
                                 </li>
-                                {% else %}
+                                {% elif not current_user.is_authenticated %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('auth.login') }}">
                                         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M409 337C418.4 327.6 418.4 312.4 409 303.1L265 159C258.1 152.1 247.8 150.1 238.8 153.8C229.8 157.5 224 166.3 224 176L224 256L112 256C85.5 256 64 277.5 64 304L64 336C64 362.5 85.5 384 112 384L224 384L224 464C224 473.7 229.8 482.5 238.8 486.2C247.8 489.9 258.1 487.9 265 481L409 337zM416 480C398.3 480 384 494.3 384 512C384 529.7 398.3 544 416 544L480 544C533 544 576 501 576 448L576 192C576 139 533 96 480 96L416 96C398.3 96 384 110.3 384 128C384 145.7 398.3 160 416 160L480 160C497.7 160 512 174.3 512 192L512 448C512 465.7 497.7 480 480 480L416 480z"/></svg>
