@@ -37,7 +37,10 @@
             </div>
         </div>
         <div class="row card-body d-flex justify-content-end">
-            <a href="bookTitles/{{ book.title }}" class="btn btn-success">More details</a>
+            {% if book.available  %}
+            <a href="" class="btn btn-success mx-2">Make a Loan</a>
+            {% endif %}
+            <a href="bookTitles/{{ book.title }}" class="btn btn-success mx-2">More details</a>
         </div>
     </div>
     {% endfor %}

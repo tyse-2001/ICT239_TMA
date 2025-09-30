@@ -223,3 +223,14 @@ class Book(db.Document):
             available = available,
             copies = copies
         ).save()
+
+    def borrowBook(self):
+        if self.available: # More than 0, aka still have avail
+            self.available -= 1
+            self.save()
+
+    def returnBook(self):
+        if self.available < self.copies: # Check if there are copies missing.
+            self.available += 1
+            self.save()
+
