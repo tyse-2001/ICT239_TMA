@@ -13,14 +13,13 @@ class Loan(db.Document):
 
     # Create Loans
     @staticmethod
-    def createLoan(member: User, book: Book, borrowDate, returnDate, renewCount):
+    def createLoan(member: User, book: Book, borrowDate, renewCount):
         # Loan for book should not already exist
         if not Loan.getUserLoanByBook(member.email, book.title) and book.available:
             loan = Loan(
                 member = member,
                 book = book,
-                borrowDate = borrowDate, # DUE DATE IS EXTRAPOLATED FRO THIS
-                # returnDate = returnDate, # THIS IS WHEN YOU RETURNED IT, OPTIONAL FIELD
+                borrowDate = borrowDate,
                 renewCount = renewCount
             ).save()
             # Update book avail. if successful

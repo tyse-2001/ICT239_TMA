@@ -37,8 +37,8 @@
             </div>
         </div>
         <div class="row card-body d-flex justify-content-end">
-            {% if book.available  %}
-            <a href="" class="btn btn-success mx-2">Make a Loan</a>
+            {% if book.available and current_user.email != "admin@lib.sg"  %}
+            <a href="/newLoan/{{ book.title }}" class="btn btn-success mx-2">Make a Loan</a>
             {% endif %}
             <a href="bookTitles/{{ book.title }}" class="btn btn-success mx-2">More details</a>
         </div>

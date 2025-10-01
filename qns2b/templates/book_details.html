@@ -24,9 +24,10 @@
     </div>
     <div class="row card-body d-flex justify-content-end">
         <a href="{{ url_for('home') }}" class="btn btn-success mx-2">Back to Book Titles</a>
-        {% if book.available  %}
-        <a href="" class="btn btn-success mx-2">Make a Loan</a>
-        {% else %}
+        {% if book.available and current_user.email != "admin@lib.sg" %}
+        <a href="/newLoan/{{ book.title }}" class="btn btn-success mx-2">Make a Loan</a>        
+        {% endif %}
+        {% if not book.available %}
         <a class="btn btn-danger mx-2 text-light">Not Available</a>
         {% endif %}
     </div>
