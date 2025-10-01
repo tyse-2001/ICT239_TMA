@@ -10,7 +10,7 @@ app.register_blueprint(loans)
 
 @app.template_filter("formatDate")
 def formatDate(date):
-    return date.strftime("%m %b %Y")
+    return date.strftime("%d %b %Y")
 
 
 @app.route("/", methods=['GET', 'POST'])
