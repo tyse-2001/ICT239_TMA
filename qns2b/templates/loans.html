@@ -32,21 +32,21 @@
                         By {{ loan.book.authors | join(', ')  }}
                     </td>
                     <td>
-                        {{ loan.get_dueDate() }}
+                        {{ loan.get_dueDate() | formatDate }}
                     </td>
                     <td>
-                        {% if loan.returnDate %} {{ loan.returnDate }} {% endif %}
+                        {% if loan.returnDate %} {{ loan.returnDate | formatDate }} {% endif %}
                     </td>
                     <td>{{ loan.renewCount }}</td>
                     <!-- TODO Add in the button actions -->
-                    {% if not loan.is_overdue() %}
-                    <td><a class="btn btn-success text-light">Return</a></td>
-                    <td><a class="btn btn-success text-light">Renew</a></td>
-                    {% elif loan.returnDate %}
+                    {% if loan.returnDate %}
                     <td><a class="btn btn-danger text-light">Delete</a></td>
                     <td></td>
+                    {% elif not loan.is_overdue() %}
+                    <td><a href="/loans/returnLoan/{{ loan.book.title }}" class="btn btn-success text-light">Return</a></td>
+                    <td><a class="btn btn-success text-light">Renew</a></td>
                     {% elif loan.is_overdue() or loan.renewCount >= 2 %}
-                    <td><a class="btn btn-success text-light">Return</a></td>
+                    <td><a href="/loans/returnLoan/{{ loan.book.title }}" class="btn btn-success text-light">Return</a></td>
                     <td></td>
                     {% endif %}
                 </tr>

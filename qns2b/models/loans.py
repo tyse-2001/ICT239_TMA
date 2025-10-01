@@ -30,17 +30,18 @@ class Loan(db.Document):
 
             return loan
 
-    # Retrieve Loans
     @staticmethod
     def getLoansByUser(email):
+        """ Get all loans by user in descending order """
         loans = Loan.objects(member=User.getUser(email))
-        sorted_loans = loans.order_by("-returnDate")
+        sorted_loans = loans.order_by("-borrowDate")
         return sorted_loans
     
     @staticmethod
-    def getUserLoanByBook(email, title):
+    def getUserLoanByBook(email: str, title: str):
+        """ Get the latest loan of specified book by user """
         loans = Loan.objects(member=User.getUser(email), book=Book.getBook(title))
-        sorted_loans = loans.order_by("-borrowDate")
+        sorted_loans = loans.order_by("-returnDate")
         return sorted_loans.first()
 
     # Update Loans
@@ -49,8 +50,8 @@ class Loan(db.Document):
         self.renewCount += 1
         self.save()
 
-    def returnLoan(self, new_date):
-        self.returnDate = new_date
+    def returnLoan(self):
+        self.returnDate = date.today()
         self.save()
         self.book.returnBook()
     

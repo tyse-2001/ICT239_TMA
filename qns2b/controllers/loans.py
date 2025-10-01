@@ -39,3 +39,11 @@ def display_loans():
     else:
         flash("Please login or register first to get an account", "error")
         return redirect(url_for('auth.login'))
+
+
+@loans.route("/loans/returnLoan/<title>")
+def return_loan(title):
+    loan = Loan.getUserLoanByBook(current_user.email, title)
+    loan.returnLoan()
+    flash(f"{loan.book.title} has been returned.", "success")
+    return redirect(url_for('loans.display_loans'))

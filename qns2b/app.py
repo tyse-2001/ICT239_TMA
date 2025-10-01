@@ -8,6 +8,11 @@ app.register_blueprint(books)
 app.register_blueprint(loans)
 
 
+@app.template_filter("formatDate")
+def formatDate(date):
+    return date.strftime("%m %b %Y")
+
+
 @app.route("/", methods=['GET', 'POST'])
 def home():
     return redirect(url_for('books.book_titles'))
