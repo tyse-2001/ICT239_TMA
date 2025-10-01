@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from qns2b import db
 from models.users import User
 from models.books import Book
@@ -14,8 +15,10 @@ class Loan(db.Document):
     # Create Loans
     @staticmethod
     def createLoan(member: User, book: Book, borrowDate, renewCount):
-        # Loan for book should not already exist
-        if not Loan.getUserLoanByBook(member.email, book.title) and book.available:
+        latest_loan = Loan.getUserLoanByBook(member.email, book.title)
+        
+        # Past loans can exist, but must be returned first.
+        if not latest_loan or latest_loan.returnDate and book.available:
             loan = Loan(
                 member = member,
                 book = book,
@@ -30,11 +33,15 @@ class Loan(db.Document):
     # Retrieve Loans
     @staticmethod
     def getLoansByUser(email):
-        return Loan.objects(member=User.getUser(email))
+        loans = Loan.objects(member=User.getUser(email))
+        sorted_loans = loans.order_by("-returnDate")
+        return sorted_loans
     
     @staticmethod
     def getUserLoanByBook(email, title):
-        return Loan.objects(member=User.getUser(email), book=Book.getBook(title)).first()
+        loans = Loan.objects(member=User.getUser(email), book=Book.getBook(title))
+        sorted_loans = loans.order_by("-borrowDate")
+        return sorted_loans.first()
 
     # Update Loans
     def renewLoan(self, new_date):
@@ -49,5 +56,14 @@ class Loan(db.Document):
     
     # Delete Loans
     def deleteLoan(self):
-        # TODO Implement check to check if book is returned.
-        self.delete()
+        if self.returnDate:
+            self.delete()
+
+    def get_dueDate(self) -> date:
+        return self.borrowDate + timedelta(days=14)
+
+    def is_overdue(self) -> bool:
+        # Check if book is still loaned out
+        if not self.returnDate:
+            return date.today() > self.get_dueDate()
+        return False

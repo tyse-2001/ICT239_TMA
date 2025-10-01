@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block mainBodyContent %}
+{{ super() }}
+
+{% if not all_loans %}
+<h2>
+    No loan currently
+</h2>
+{% else %}
+<div class="card my-2 shadow">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title/Author</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Return Date</th>
+                    <th scope="col">Renew Count</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in all_loans %}
+                <tr>
+                    <td>
+                        <img class="img-fluid loan-book-cover" src="{{ loan.book.url }}" alt="{{ loan.book.title }}">
+                        <br>
+                        {{ loan.book.title }}
+                        <br>
+                        By {{ loan.book.authors | join(', ')  }}
+                    </td>
+                    <td>
+                        {{ loan.get_dueDate() }}
+                    </td>
+                    <td>
+                        {% if loan.returnDate %} {{ loan.returnDate }} {% endif %}
+                    </td>
+                    <td>{{ loan.renewCount }}</td>
+                    <!-- TODO Add in the button actions -->
+                    {% if not loan.is_overdue() %}
+                    <td><a class="btn btn-success text-light">Return</a></td>
+                    <td><a class="btn btn-success text-light">Renew</a></td>
+                    {% elif loan.returnDate %}
+                    <td><a class="btn btn-danger text-light">Delete</a></td>
+                    <td></td>
+                    {% elif loan.is_overdue() or loan.renewCount >= 2 %}
+                    <td><a class="btn btn-success text-light">Return</a></td>
+                    <td></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
