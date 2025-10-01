@@ -2,8 +2,10 @@ from flask import redirect, url_for, request, render_template
 from qns2b import app
 from controllers.auth import auth
 from controllers.books import books
+from controllers.loans import loans
 app.register_blueprint(auth)
 app.register_blueprint(books)
+app.register_blueprint(loans)
 
 
 @app.route("/", methods=['GET', 'POST'])
