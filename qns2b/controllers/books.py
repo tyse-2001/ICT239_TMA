@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request,\
+    flash, redirect, url_for
 
 from models.books import Book
 from models.forms import BookForm
@@ -39,7 +40,12 @@ def getBook(title: str) -> dict:
 def book_titles():
     books = Book.getAllBooks()
     if request.method == "GET":
-        return render_template("book_titles.html", books = books, categories = getCategories(), panel="Book Titles")
+        return render_template(
+            "book_titles.html", 
+            books = books, 
+            categories = getCategories(), 
+            panel="Book Titles"
+        )
     else:
         return render_template(
             "book_titles.html",
@@ -50,7 +56,11 @@ def book_titles():
 
 @books.route("/bookTitles/<title>")
 def book_details(title):
-    return render_template("book_details.html", book=getBook(title), panel="Book Details")
+    return render_template(
+        "book_details.html", 
+        book = getBook(title), 
+        panel = "Book Details"
+    )
 
 
 @books.route("/newBook", methods = ['GET', 'POST'])
@@ -107,7 +117,11 @@ def new_book():
         else:
             flash(f"{form.title.data} already exists")
             form.title.errors.append(f"{form.title.data} already exists")
-            return render_template("new_book.html", form=form, panel="Add a book")
+            return render_template(
+                "new_book.html", 
+                form = form, 
+                panel = "Add a book"
+            )
 
 
     return render_template("new_book.html", form=form, panel="Add a book")

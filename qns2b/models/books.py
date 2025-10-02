@@ -209,7 +209,8 @@ class Book(db.Document):
         return sorted(list(books), key=lambda d: d["title"])
 
     @staticmethod
-    def createBook(genres, title, category, url, description, authors, pages, available, copies):
+    def createBook(genres, title, category, url, description, authors, pages,\
+                   available, copies):
         return Book(
             genres = genres,
             title = title,
@@ -223,12 +224,12 @@ class Book(db.Document):
         ).save()
 
     def borrowBook(self):
-        if self.available: # More than 0, aka still have avail
+        if self.available:
             self.available -= 1
             self.save()
 
     def returnBook(self):
-        if self.available < self.copies: # Check if there are copies missing.
+        if self.available < self.copies:
             self.available += 1
             self.save()
 

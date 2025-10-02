@@ -21,14 +21,25 @@ def register():
     if form.validate_on_submit():
         existing_user = User.getUser(email=form.email.data)
         if not existing_user:
-            hashpass = generate_password_hash(form.password.data, method='pbkdf2:sha256')
-            user = User.createUser(email=form.email.data, password=hashpass, name=form.name.data)
+            hashpass = generate_password_hash(
+                form.password.data, 
+                method = 'pbkdf2:sha256'
+            )
+            user = User.createUser(
+                email=form.email.data, 
+                password=hashpass, 
+                name=form.name.data
+            )
             flash(f'{user.name} registered with email {user.email}')
             return redirect(url_for('auth.login'))
         else:
-            flash(f'{form.email.data} was previously registered already. Choose another email')
+            flash(f'{form.email.data} was previously registered already.')
             form.email.errors.append("User already existed")
-            return render_template('register.html', form=form, panel="Register")
+            return render_template(
+                'register.html', 
+                form = form, 
+                panel = "Register"
+            )
     
     return render_template('register.html', form=form, panel="Register")
 

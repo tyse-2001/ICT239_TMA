@@ -37,7 +37,12 @@ def getBook(title: str) -> dict:
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if request.method == "GET":
-        return render_template("book_titles.html", books = getBooks("All"), categories = getCategories(), panel="Book Titles")
+        return render_template(
+            "book_titles.html", 
+            books = getBooks("All"), 
+            categories = getCategories(), 
+            panel="Book Titles"
+        )
     else:
         return render_template(
             "book_titles.html",
@@ -48,4 +53,8 @@ def home():
 
 @app.route("/bookTitles/<title>")
 def book_details(title):
-    return render_template("book_details.html", book=getBook(title), panel="Book Details")
+    return render_template(
+        "book_details.html", 
+        book=getBook(title), 
+        panel="Book Details"
+    )
