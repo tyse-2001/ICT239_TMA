@@ -13,14 +13,15 @@ def getCategories():
 
 def getBooks(category: str) -> list:
     if category == "All":
-        return all_books
+        return sorted(all_books, key=lambda d: d["title"])
     else:
         books = []
         for book in all_books:
             if book["category"] == category:
                 books.append(book)
 
-        return books
+        sorted_books = sorted(books, key=lambda d: d["title"])
+        return sorted_books
 
 
 def getBook(title: str) -> dict:
@@ -35,7 +36,7 @@ def getBook(title: str) -> dict:
 @app.route("/", methods=['GET', 'POST'])
 def home():
     if request.method == "GET":
-        return render_template("book_titles.html", books = all_books, categories = getCategories(), panel="Book Titles")
+        return render_template("book_titles.html", books = getBooks("All"), categories = getCategories(), panel="Book Titles")
     else:
         return render_template(
             "book_titles.html",

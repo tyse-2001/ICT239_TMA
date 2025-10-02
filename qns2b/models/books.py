@@ -1,6 +1,5 @@
 from mongoengine.queryset.visitor import Q
 from qns2b import db
-# from ..books import all_books
 
 
 all_books = [
@@ -208,7 +207,7 @@ class Book(db.Document):
                 )
             books = Book.objects()
         
-        return list(books)
+        return sorted(list(books), key=lambda d: d["title"])
 
     @staticmethod
     def createBook(genres, title, category, url, description, authors, pages, available, copies):
