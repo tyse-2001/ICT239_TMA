@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SelectMultipleField, SelectField, TextAreaField, IntegerField, BooleanField
 from wtforms.validators import Email, InputRequired, URL
-from wtforms.widgets import CheckboxInput
 
 
 class RegForm(FlaskForm):

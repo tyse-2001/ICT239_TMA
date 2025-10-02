@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+
 from qns2b import db
 from models.users import User
 from models.books import Book

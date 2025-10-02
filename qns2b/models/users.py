@@ -1,5 +1,6 @@
-from qns2b import db
 from flask_login import UserMixin
+
+from qns2b import db
 
 
 class User(UserMixin, db.Document):

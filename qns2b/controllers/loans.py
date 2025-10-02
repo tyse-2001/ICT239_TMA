@@ -2,6 +2,7 @@ from datetime import date, timedelta
 from random import randint
 from flask import Blueprint, flash, redirect, url_for, render_template
 from flask_login import current_user
+
 from models.loans import Loan
 from models.books import Book
 

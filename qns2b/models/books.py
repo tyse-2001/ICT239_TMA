@@ -1,4 +1,3 @@
-from mongoengine.queryset.visitor import Q
 from qns2b import db
 
 
