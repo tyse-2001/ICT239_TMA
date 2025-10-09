@@ -54,10 +54,8 @@ def login():
                 login_user(user)
                 return redirect(url_for("home"))
             else:
-                # TODO Replace with generic error message later
                 form.password.errors.append("User Password Not Correct")
         else:
-            # TODO Replace with generic error message later
             form.email.errors.append("No Such User")
 
     return render_template('login.html', form=form, panel="Login")

@@ -38,11 +38,10 @@ def getBook(title: str) -> dict:
 
 @books.route("/bookTitles", methods=['GET', 'POST'])
 def book_titles():
-    books = Book.getAllBooks()
     if request.method == "GET":
         return render_template(
             "book_titles.html", 
-            books = books, 
+            books = getBooks("All"),
             categories = getCategories(), 
             panel="Book Titles"
         )
